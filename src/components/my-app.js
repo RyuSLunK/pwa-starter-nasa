@@ -45,6 +45,8 @@ class MyApp extends connect(store)(LitElement) {
           display: block;
           padding: 24px;
           max-width: 600px;
+          width: 100%;
+          margin: 0 auto;
         }
 
         header {
@@ -100,7 +102,8 @@ class MyApp extends connect(store)(LitElement) {
         <nav class="toolbar-list">
           <a ?selected="${this._page === 'view1'}" href="/view1">View One</a>|
           <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>|
-          <a ?selected="${this._page === 'view3'}" href="/view3">View Three</a>
+          <a ?selected="${this._page === 'view3'}" href="/view3">View Three</a>|
+          <a ?selected="${this._page === 'clicker'}" href="/clicker">Clicker</a>
         </nav>
       </header>
 
@@ -109,6 +112,7 @@ class MyApp extends connect(store)(LitElement) {
         <my-view1 class="page" ?active="${this._page === 'view1'}"></my-view1>
         <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
         <my-view3 class="page" ?active="${this._page === 'view3'}"></my-view3>
+        <my-clicker class="page" ?active="${this._page === 'clicker'}"></clicker>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
       </main>
 

@@ -122,4 +122,4 @@ class MyView5 extends connect(store)(PageViewElement) {
   }
 }
 
-window.customElements.define('my-view5', MyView5);
+window.customElements.define('my-clicker', MyView5);
