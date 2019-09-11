@@ -19,7 +19,9 @@ const INITIAL_STATE = {
   search: '',
   loading: false,
   data: null,
-  error: null
+  error: null,
+  hits: 0,
+  list: []
 };
 
 const nasa = (state = INITIAL_STATE, action) => {
@@ -27,22 +29,39 @@ const nasa = (state = INITIAL_STATE, action) => {
     case REQUEST_ITEMS:
       return {
         loading: true,
-        error: null
+        error: null,
+        hits: 0
       };
     case RECEIVE_ITEMS:
       return {
         loading: false,
         data: action.payload,
-        error: null
+        error: null,
+        hits: extractHits(action.payload),
+        list: extractList(action.payload)
       };
     case FAIL_ITEMS:
       return {
         loading: false,
         error: action.payload
-      }
+      };
+    case SEARCH_CHANGED:
+      return {
+        search: action.payload
+      };
     default:
       return state;
   }
 };
+
+const extractHits = (data) => {
+  return data.collection.metadata.total_hits;
+}
+
+const extractList = (data) => {
+  return data.collection.items.map((item) => {
+    return item.links[0].href;
+  })
+}
 
 export default nasa;

@@ -7,7 +7,6 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { debounce } from "lodash-es";
 
 export const REQUEST_ITEMS = 'REQUEST_ITEMS';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
@@ -15,19 +14,16 @@ export const FAIL_ITEMS = 'FAIL_ITEMS';
 export const SEARCH_CHANGED = 'SEARCH_CHANGED';
 
 export const searchChanged = (payload) => (dispatch) => {
-  const debounceWrapper = () => {
-    dispatch(fetchItems());
-  }
   dispatch({
     type: SEARCH_CHANGED,
     payload
   });
-  debounce(debounceWrapper, 500);
+  dispatch(fetchItems(payload));
 }
 
-export const fetchItems = () => (dispatch) => {
+export const fetchItems = (payload) => (dispatch) => {
   dispatch(requestItems());
-  fetch(`https://images-api.nasa.gov/search`)
+  fetch(`https://images-api.nasa.gov/search?q=${encodeURIComponent(payload)}&media_type=image`)
     .then(res => res.json())
     .then(data => dispatch(receiveItems(data)))
     .catch(() => dispatch(fail))
