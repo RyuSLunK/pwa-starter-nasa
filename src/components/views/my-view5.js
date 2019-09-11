@@ -8,29 +8,30 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html } from 'lit-element';
-import { PageViewElement } from './page-view-element.js';
+import { html, css } from 'lit-element';
+import { classMap } from 'lit-html/directives/class-map.js';
+import { PageViewElement } from '../page-view-element.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
 // This element is connected to the Redux store.
-import { store } from '../store.js';
+import { store } from '../../store.js';
 
 // These are the actions needed by this element.
-import { increment, decrement } from '../actions/counter.js';
+import { increment, decrement, double, halve, triple, third } from '../../actions/myCounter';
 
 // We are lazy loading its reducer.
-import counter from '../reducers/counter.js';
+import myCounter from '../../reducers/myCounter';
 store.addReducers({
-  counter
+    myCounter
 });
 
 // These are the elements needed by this element.
-import './counter-element.js';
+import '../my-counter.js';
 
 // These are the shared styles needed by this element.
-import { SharedStyles } from './shared-styles.js';
+import { SharedStyles } from '../shared-styles.js';
 
-class MyView2 extends connect(store)(PageViewElement) {
+class MyView5 extends connect(store)(PageViewElement) {
   static get properties() {
     return {
       // This is the data from the store.
@@ -41,49 +42,84 @@ class MyView2 extends connect(store)(PageViewElement) {
 
   static get styles() {
     return [
-      SharedStyles
+      SharedStyles,
+      css`
+        .red {
+          background-color: red;
+        }
+
+        .blue {
+          background-color: blue;
+        }
+
+        .red.blue {
+          background-color: purple;
+        }
+      `
     ];
   }
 
   render() {
+    let circleClasses = {red: this._value % 3 === 0, blue: this._value % 5 === 0, circle: true}
     return html`
       <section>
         <h2>Redux example: simple counter</h2>
-        <div>Number of clicks: <b>${this._value}</b></div>
+        <div class="${classMap(circleClasses)}">${this._value}</div>
         <p>This page contains a reusable <code>&lt;counter-element&gt;</code>. The
         element is not built in a Redux-y way (you can think of it as being a
         third-party element you got from someone else), but this page is connected to the
         Redux store. When the element updates its counter, this page updates the values
         in the Redux store, and you can see the current value of the counter reflected in
         the bubble above.</p>
-        <br>
+        <br><br>
       </section>
       <section>
         <p>
-          <counter-element
+          <my-counter
               value="${this._value}"
               clicks="${this._clicks}"
-              @counter-incremented="${this._counterIncremented}"
-              @counter-decremented="${this._counterDecremented}">
-          </counter-element>
+              @myCounter-incremented="${this._myCounterIncremented}"
+              @myCounter-decremented="${this._myCounterDecremented}"
+              @myCounter-doubled="${this._myCounterDoubled}"
+              @myCounter-halved="${this._myCounterHalved}"
+              @myCounter-tripled="${this._myCounterTripled}"
+              @myCounter-thirded="${this._myCounterThirded}"
+              >
+        </my-counter>
         </p>
       </section>
     `;
   }
 
-  _counterIncremented() {
+  _myCounterIncremented() {
     store.dispatch(increment());
   }
 
-  _counterDecremented() {
+  _myCounterDecremented() {
     store.dispatch(decrement());
+  }
+
+  _myCounterDoubled() {
+    store.dispatch(double());
+  }
+
+  _myCounterHalved() {
+    store.dispatch(halve());
+  }
+
+  _myCounterTripled() {
+    store.dispatch(triple());
+  }
+
+  _myCounterThirded() {
+    store.dispatch(third());
   }
 
   // This is called every time something is updated in the store.
   stateChanged(state) {
-    this._clicks = state.counter.clicks;
-    this._value = state.counter.value;
+    this._clicks = state.myCounter.clicks;
+    this._value = state.myCounter.value;
   }
 }
 
-window.customElements.define('my-view2', MyView2);
+window.customElements.define('my-clicker', MyView5);

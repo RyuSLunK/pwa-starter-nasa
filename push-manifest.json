@@ -5,7 +5,7 @@
       "type": "script",
       "weight": 1
     },
-    "src/components/my-view1.js": {
+    "src/components/views/my-view1.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
@@ -21,7 +21,7 @@
       "type": "script",
       "weight": 1
     },
-    "src/components/my-view1.js": {
+    "src/components/views/my-view1.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
@@ -37,7 +37,7 @@
       "type": "script",
       "weight": 1
     },
-    "src/components/my-view2.js": {
+    "src/components/views/my-view2.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
@@ -48,12 +48,12 @@
     }
   },
   "/view3": {
-    "src/components/my-app.js": {
+    "src/components/views/my-app.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
     },
-    "src/components/my-view3.js": {
+    "src/components/views/my-view3.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
@@ -69,7 +69,23 @@
       "type": "script",
       "weight": 1
     },
-    "src/components/my-view5.js": {
+    "src/components/views/my-view5.js": {
+      "crossorigin": "anonymous",
+      "type": "script",
+      "weight": 1
+    },
+    "node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js": {
+      "type": "script",
+      "weight": 1
+    }
+  },
+  "/nasa": {
+    "src/components/my-app.js": {
+      "crossorigin": "anonymous",
+      "type": "script",
+      "weight": 1
+    },
+    "src/components/views/nasa.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1
